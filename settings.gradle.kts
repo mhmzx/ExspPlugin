@@ -1,1 +1,1 @@
-rootProject.name = "ExSharedPreference"
+rootProject.name = "ExspPlugin"
