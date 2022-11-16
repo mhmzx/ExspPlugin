@@ -15,9 +15,10 @@ repositories {
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
+// Android Studio version: https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
 intellij {
-    version.set("2022.2.3")
-    type.set("AI") // Target IDE Platform
+    version.set("2021.3.1.17") // Dolphin (2021.3.1) Patch 1
+    type.set("AI") // Android Studio
 
     plugins.set(listOf(/* Plugin Dependencies */))
 }
@@ -33,7 +34,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("213")
+        sinceBuild.set("213.*")
         untilBuild.set("222.*")
     }
 
