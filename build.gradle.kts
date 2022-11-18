@@ -1,4 +1,5 @@
 import org.gradle.internal.impldep.org.bouncycastle.cms.RecipientId.password
+import java.util.Properties
 
 plugins {
     id("java")
@@ -18,8 +19,16 @@ repositories {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 // Android Studio version: https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
 intellij {
-    version.set("2021.3.1.17") // Dolphin (2021.3.1) Patch 1
-    type.set("AI") // Android Studio
+    val path = rootProject.file("local.properties").inputStream().use { prop ->
+        return@use (Properties().also { it.load(prop) }.getProperty("ai.dir") ?: "")
+            .takeIf { file(it).exists() }
+    }
+    if (path != null) {
+        localPath.set(path)
+    } else {
+        version.set("2021.3.1.17") // Dolphin (2021.3.1) Patch 1
+        type.set("AI") // Android Studio
+    }
 
     plugins.set(listOf(
         "java",
@@ -38,7 +47,7 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("212.*")
+        sinceBuild.set("213")
         untilBuild.set("222.*")
     }
 
