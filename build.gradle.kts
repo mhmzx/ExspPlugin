@@ -3,13 +3,14 @@ import org.gradle.internal.impldep.org.bouncycastle.cms.RecipientId.password
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.7.21"
-    id("org.jetbrains.intellij") version "1.9.0"
+    id("org.jetbrains.intellij") version "1.10.0"
 }
 
 group = "io.github.sgpublic"
-version = "1.0-SNAPSHOT"
+version = "1.0.0-alpha01"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -20,21 +21,24 @@ intellij {
     version.set("2021.3.1.17") // Dolphin (2021.3.1) Patch 1
     type.set("AI") // Android Studio
 
-    plugins.set(listOf(/* Plugin Dependencies */))
+    plugins.set(listOf(
+        "java",
+        "Kotlin",
+    ))
 }
 
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "11"
     }
 
     patchPluginXml {
-        sinceBuild.set("213.*")
+        sinceBuild.set("212.*")
         untilBuild.set("222.*")
     }
 
@@ -48,3 +52,8 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 }
+
+dependencies {
+    implementation("io.github.sgpublic:exsp-common:1.0.0-alpha08")
+}
+
