@@ -28,6 +28,6 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <lang.psiAugmentProvider implementation="io.github.sgpublic.exspplugin.impl.PsiAugmentProvider" />
+        <lang.psiAugmentProvider implementation="io.github.sgpublic.exspplugin.core.PsiAugmentProvider" />
     </extensions>
 </idea-plugin>

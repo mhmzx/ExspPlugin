@@ -1,7 +1,7 @@
 package io.github.sgpublic.exspplugin.util
 
-import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.diagnostic.LoggerRt
 
-val Any.log: Logger get() {
-    return Logger.getInstance(javaClass)
+val Any.log: LoggerRt get() {
+    return LoggerRt.getInstance(javaClass)
 }
