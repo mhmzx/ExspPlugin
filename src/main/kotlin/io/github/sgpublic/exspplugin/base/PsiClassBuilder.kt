@@ -3,9 +3,11 @@ package io.github.sgpublic.exspplugin.base
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiMethod
 import com.intellij.psi.SyntheticElement
 import com.intellij.psi.impl.light.LightModifierList
 import com.intellij.psi.impl.light.LightPsiClassBuilder
+import java.util.*
 
 
 open class PsiClassBuilder(
@@ -16,18 +18,29 @@ open class PsiClassBuilder(
         LightModifierList(context.manager, context.language)
     }
 
-    fun addModifier(vararg modifiers: String): LightPsiClassBuilder {
+    fun addModifier(vararg modifiers: String): PsiClassBuilder {
         for (modifier in modifiers) {
             mModifierList.addModifier(modifier)
         }
         return this
     }
 
+    private val constructors: LinkedList<PsiMethod> = LinkedList()
+    fun addConstructor(vararg methods: PsiMethod): PsiClassBuilder {
+        constructors.addAll(methods)
+        return this
+    }
+
+    override fun getConstructors(): Array<PsiMethod> {
+        return constructors.toTypedArray()
+    }
+
     private var mContainingFile: PsiFile? = null
 
-    override fun setContainingClass(containingClass: PsiClass?): LightPsiClassBuilder {
+    override fun setContainingClass(containingClass: PsiClass?): PsiClassBuilder {
         mContainingFile = containingClass?.containingFile
-        return super.setContainingClass(containingClass)
+        super.setContainingClass(containingClass)
+        return this
     }
 
     override fun getContainingFile(): PsiFile? {

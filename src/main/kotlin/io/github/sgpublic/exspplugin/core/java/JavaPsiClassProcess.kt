@@ -34,7 +34,7 @@ class JavaPsiClassProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiClass>(clazz
         }
 
         PsiMethodBuilder(Editor.manager, JavaLanguage.INSTANCE, "apply")
-            .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
+            .addModifiers(PsiModifier.PUBLIC)
             .setMethodReturnType(PsiType.VOID)
             .setContainingClass(OriginElement)
             .also {
