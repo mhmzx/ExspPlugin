@@ -22,10 +22,8 @@ abstract class PsiProcess<T1: PsiElement, T2: PsiElement>(
     protected val Parent = OriginElement.parent
 
     companion object {
-        @Suppress("UNCHECKED_CAST")
         fun <T1: PsiElement, T2: PsiElement> of(element: T1, type: Class<T2>): PsiProcess<T1, T2>? {
-
-            return when (element) {
+            val result = when (element) {
                 is KtClass -> {
                     log.info("Current element is KtClass, require $type: ${element.name}")
                     when (type) {
@@ -56,7 +54,9 @@ abstract class PsiProcess<T1: PsiElement, T2: PsiElement>(
                     }
                 }
                 else -> null
-            } as PsiProcess<T1, T2>?
+            }
+            @Suppress("UNCHECKED_CAST")
+            return result as PsiProcess<T1, T2>?
         }
     }
 }

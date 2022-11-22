@@ -5,13 +5,15 @@ import io.github.sgpublic.exspplugin.base.PsiProcess
 import io.github.sgpublic.exspplugin.util.hasAnnotation
 import io.github.sgpublic.exspplugin.util.ktParent
 import io.github.sgpublic.exspplugin.util.log
+import org.jetbrains.kotlin.asJava.classes.KtLightClass
+import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.idea.core.getOrCreateCompanionObject
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.containingClass
 
-class KtPsiComObjProcess(clazz: KtClass): PsiProcess<KtClass, KtObjectDeclaration>(clazz) {
+class KtPsiComObjProcess(clazz: KtClass): PsiProcess<KtLightClass, KtObjectDeclaration>(clazz.toLightClass()!!) {
     override fun process(): Collection<KtObjectDeclaration> {
-        if (!OriginElement.hasAnnotation(ExSharedPreference::class.java)) {
+        if (!OriginElement.hasAnnotation(ExSharedPreference::class.java.canonicalName)) {
             return emptyList()
         }
 
