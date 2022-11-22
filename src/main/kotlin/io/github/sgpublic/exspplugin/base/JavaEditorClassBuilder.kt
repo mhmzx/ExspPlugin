@@ -2,7 +2,7 @@ package io.github.sgpublic.exspplugin.base
 
 import com.intellij.psi.PsiClass
 
-class EditorClassBuilder(clazz: PsiClass): PsiClassBuilder(
+class JavaEditorClassBuilder(clazz: PsiClass): JavaPsiClassBuilder(
     clazz, "Editor", clazz.qualifiedName ?: ""
 ) {
     override fun getQualifiedName(): String {

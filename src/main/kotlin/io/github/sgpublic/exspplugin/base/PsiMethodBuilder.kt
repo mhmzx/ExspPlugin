@@ -1,12 +1,15 @@
 package io.github.sgpublic.exspplugin.base
 
 import com.intellij.lang.Language
+import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.*
 import com.intellij.psi.impl.light.LightMethodBuilder
 import javaslang.Function1
 import org.jetbrains.annotations.NotNull
+import org.jetbrains.kotlin.idea.KotlinLanguage
+import org.jetbrains.kotlin.psi.*
 
-class PsiMethodBuilder(
+open class PsiMethodBuilder(
     manager: PsiManager, language: Language, name: String
 ): LightMethodBuilder(manager, language, name), SyntheticElement {
     private var myBodyAsText: String? = null
@@ -34,3 +37,11 @@ class PsiMethodBuilder(
         return this
     }
 }
+
+class JavaPsiMethodBuilder(
+    manager: PsiManager, name: String
+): PsiMethodBuilder(manager, JavaLanguage.INSTANCE, name)
+
+class KtPsiMethodBuilder(
+    manager: PsiManager, name: String
+): PsiMethodBuilder(manager, KotlinLanguage.INSTANCE, name)

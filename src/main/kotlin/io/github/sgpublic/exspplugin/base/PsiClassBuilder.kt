@@ -7,18 +7,28 @@ import com.intellij.psi.PsiMethod
 import com.intellij.psi.SyntheticElement
 import com.intellij.psi.impl.light.LightModifierList
 import com.intellij.psi.impl.light.LightPsiClassBuilder
+import org.jetbrains.kotlin.asJava.classes.KtLightClass
+import org.jetbrains.kotlin.asJava.elements.KtLightMethod
+import org.jetbrains.kotlin.idea.search.usagesSearch.constructor
+import org.jetbrains.kotlin.lexer.KtModifierKeywordToken
+import org.jetbrains.kotlin.name.FqName
+import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtClassOrObject
+import org.jetbrains.kotlin.psi.KtObjectDeclaration
+import org.jetbrains.kotlin.psi.allConstructors
 import java.util.*
 
+interface PsiClassBuilder
 
-open class PsiClassBuilder(
+open class JavaPsiClassBuilder(
     context: PsiElement, simpleName: String,
     private val mQualifiedName: String,
-) : LightPsiClassBuilder(context, simpleName), SyntheticElement {
+) : LightPsiClassBuilder(context, simpleName), SyntheticElement, PsiClassBuilder {
     private val mModifierList: LightModifierList by lazy {
         LightModifierList(context.manager, context.language)
     }
 
-    fun addModifier(vararg modifiers: String): PsiClassBuilder {
+    fun addModifier(vararg modifiers: String): JavaPsiClassBuilder {
         for (modifier in modifiers) {
             mModifierList.addModifier(modifier)
         }
@@ -26,7 +36,7 @@ open class PsiClassBuilder(
     }
 
     private val constructors: LinkedList<PsiMethod> = LinkedList()
-    fun addConstructor(vararg methods: PsiMethod): PsiClassBuilder {
+    fun addConstructor(vararg methods: PsiMethod): JavaPsiClassBuilder {
         constructors.addAll(methods)
         return this
     }
@@ -37,7 +47,7 @@ open class PsiClassBuilder(
 
     private var mContainingFile: PsiFile? = null
 
-    override fun setContainingClass(containingClass: PsiClass?): PsiClassBuilder {
+    override fun setContainingClass(containingClass: PsiClass?): JavaPsiClassBuilder {
         mContainingFile = containingClass?.containingFile
         super.setContainingClass(containingClass)
         return this
@@ -70,7 +80,7 @@ open class PsiClassBuilder(
         if (other == null || javaClass != other.javaClass) {
             return false
         }
-        val that = other as PsiClassBuilder
+        val that = other as JavaPsiClassBuilder
         return mQualifiedName == that.mQualifiedName
     }
 

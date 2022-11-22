@@ -10,8 +10,9 @@ import io.github.sgpublic.exspplugin.base.PsiProcess
 import io.github.sgpublic.exspplugin.util.SetterName
 import io.github.sgpublic.exspplugin.util.createEditorClass
 import io.github.sgpublic.exspplugin.util.getType
+import io.github.sgpublic.exspplugin.util.log
 
-class JavaPsiClassProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiClass>(clazz) {
+open class JavaPsiClassProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiClass>(clazz) {
     override fun process(): Collection<PsiClass> {
         val result = mutableListOf<PsiClass>()
 

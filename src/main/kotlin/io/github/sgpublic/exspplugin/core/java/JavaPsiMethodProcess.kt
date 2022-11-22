@@ -5,14 +5,13 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
 import com.intellij.psi.PsiType
-import com.intellij.psi.impl.light.LightMethodBuilder
 import io.github.sgpublic.exsp.annotations.ExSharedPreference
 import io.github.sgpublic.exsp.annotations.ExValue
 import io.github.sgpublic.exspplugin.base.PsiMethodBuilder
 import io.github.sgpublic.exspplugin.base.PsiProcess
 import io.github.sgpublic.exspplugin.util.*
 
-class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod>(clazz) {
+open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod>(clazz) {
     override fun process(): Collection<PsiMethod> {
         val result = mutableListOf<PsiMethod>()
 
@@ -22,8 +21,6 @@ class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod>(cla
             log.warn("DO NOT add @lombok.Data with @ExSharedPreference together! In class: $Name")
             return result
         }
-
-        log.info("Process java class: $Name")
 
         val Editor = OriginElement.getEditorClass()
 
@@ -38,10 +35,6 @@ class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod>(cla
                 result.add(it)
             }
 
-        if (OriginElement.fields.isEmpty()) {
-            log.info("@ExSharedPreference class of $Name has empty fields.")
-        }
-
         for (field in OriginElement.fields) {
             if (!field.hasAnnotation(ExValue::class.java.canonicalName) ||
                 field.hasModifierProperty(PsiModifier.FINAL)) {
@@ -51,8 +44,6 @@ class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod>(cla
             if (field.hasAnnotation("lombok.Data")) {
                 log.warn("DO NOT add @lombok.Data with @ExSharedPreference together! In class: $Name")
                 continue
-            } else {
-                log.info("Process java field: ${field.name}, in class: $Name")
             }
 
             PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, field.GetterName)

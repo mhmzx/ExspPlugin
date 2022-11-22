@@ -9,15 +9,17 @@ import org.jetbrains.kotlin.idea.core.getOrCreateCompanionObject
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.containingClass
 
-class KtPsiMethodProcess(clazz: KtObjectDeclaration): PsiProcess<KtObjectDeclaration, KtFunction>(clazz) {
-    override fun process(): Collection<KtFunction> {
-        if (!OriginElement.ktParent.hasAnnotation(ExSharedPreference::class.java)) {
+class KtPsiComObjProcess(clazz: KtClass): PsiProcess<KtClass, KtObjectDeclaration>(clazz) {
+    override fun process(): Collection<KtObjectDeclaration> {
+        if (!OriginElement.hasAnnotation(ExSharedPreference::class.java)) {
             return emptyList()
         }
 
-        log.info("Process kotlin method: $Name")
+        log.info("Process kotlin companion object: $Name")
+        val comObj = OriginElement.getOrCreateCompanionObject()
         val factory = KtPsiFactory(Project, true)
-        return mutableListOf(factory.createFunction("fun edit(): Editor"))
+        comObj.addSuperTypeListEntry(factory.createSuperTypeEntry(Name))
+        return mutableListOf(comObj)
     }
 
     override val Name: String = clazz.name ?: ""
