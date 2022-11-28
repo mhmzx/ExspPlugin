@@ -14,7 +14,7 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    A plugin for ExSharedPreference support!
+    A plugin to support [ExSharedPreference](https://github.com/mhmzx/ExSharedPreference) in Java projects.
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.
