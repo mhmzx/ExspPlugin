@@ -5,6 +5,7 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
 import com.intellij.psi.PsiType
+import com.intellij.psi.util.PsiTypesUtil
 import io.github.sgpublic.exsp.annotations.ExSharedPreference
 import io.github.sgpublic.exsp.annotations.ExValue
 import io.github.sgpublic.exspplugin.base.PsiMethodBuilder
@@ -49,6 +50,17 @@ open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod
             PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, field.GetterName)
                 .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
                 .setMethodReturnType(field.type)
+                .setContainingClass(field.containingClass)
+                .also {
+                    it.navigationElement = field
+                }
+                .let {
+                    result.add(it)
+                }
+
+            PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, "${field.GetterName}Observer")
+                .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
+                .setMethodReturnType(PsiType.getTypeByName("androidx.lifecycle.LiveData<${field.type.canonicalText}>", field.project, field.resolveScope))
                 .setContainingClass(field.containingClass)
                 .also {
                     it.navigationElement = field
