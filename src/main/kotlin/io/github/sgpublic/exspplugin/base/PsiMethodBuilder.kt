@@ -7,7 +7,6 @@ import com.intellij.psi.impl.light.LightMethodBuilder
 import javaslang.Function1
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.kotlin.idea.KotlinLanguage
-import org.jetbrains.kotlin.psi.*
 
 open class PsiMethodBuilder(
     manager: PsiManager, language: Language, name: String

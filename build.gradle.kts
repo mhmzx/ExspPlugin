@@ -1,5 +1,4 @@
-import org.gradle.internal.impldep.org.bouncycastle.cms.RecipientId.password
-import java.util.Properties
+import java.util.*
 
 plugins {
     id("java")
@@ -12,12 +11,12 @@ version = "1.0.0-alpha01"
 
 repositories {
     mavenLocal()
+    google()
     mavenCentral()
 }
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-// Android Studio version: https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
 intellij {
     val path = rootProject.file("local.properties").inputStream().use { prop ->
         return@use (Properties().also { it.load(prop) }.getProperty("ai.dir") ?: "")
@@ -26,6 +25,7 @@ intellij {
     if (path != null) {
         localPath.set(path)
     } else {
+        // Android Studio version: https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
         version.set("2021.3.1.17") // Dolphin (2021.3.1) Patch 1
         type.set("AI") // Android Studio
     }
@@ -63,6 +63,7 @@ tasks {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/io.github.sgpublic/exsp-common
     implementation("io.github.sgpublic:exsp-common:1.0.0-alpha08")
 }
 

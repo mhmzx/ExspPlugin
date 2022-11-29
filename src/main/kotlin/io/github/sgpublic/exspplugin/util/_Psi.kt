@@ -6,7 +6,6 @@ import com.intellij.psi.impl.light.LightPsiClassBuilder
 import io.github.sgpublic.exspplugin.base.JavaEditorClassBuilder
 import io.github.sgpublic.exspplugin.base.PsiMethodBuilder
 import org.jetbrains.kotlin.idea.base.utils.fqname.getKotlinFqName
-import org.jetbrains.kotlin.idea.core.getOrCreateCompanionObject
 import org.jetbrains.kotlin.lombok.utils.capitalize
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtObjectDeclaration
@@ -22,7 +21,7 @@ fun LightPsiClassBuilder.addModifier(vararg modifiers: String): LightPsiClassBui
 }
 
 fun PsiClass.getType(): PsiType {
-    return JavaPsiFacade.getElementFactory(project).createTypeByFQClassName(qualifiedName ?: "")
+    return JavaPsiFacade.getElementFactory(project).createType(this)
 }
 
 val PsiField.IsBoolean: Boolean get() = type.equalsToText("boolean") || type.equalsToText("java.lang.Boolean")

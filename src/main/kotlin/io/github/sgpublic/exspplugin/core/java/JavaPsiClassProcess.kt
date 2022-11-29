@@ -10,7 +10,6 @@ import io.github.sgpublic.exspplugin.base.PsiProcess
 import io.github.sgpublic.exspplugin.util.SetterName
 import io.github.sgpublic.exspplugin.util.createEditorClass
 import io.github.sgpublic.exspplugin.util.getType
-import io.github.sgpublic.exspplugin.util.log
 
 open class JavaPsiClassProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiClass>(clazz) {
     override fun process(): Collection<PsiClass> {

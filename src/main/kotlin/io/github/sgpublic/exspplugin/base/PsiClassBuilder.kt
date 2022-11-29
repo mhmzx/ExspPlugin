@@ -1,21 +1,8 @@
 package io.github.sgpublic.exspplugin.base
 
-import com.intellij.psi.PsiClass
-import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiMethod
-import com.intellij.psi.SyntheticElement
+import com.intellij.psi.*
 import com.intellij.psi.impl.light.LightModifierList
 import com.intellij.psi.impl.light.LightPsiClassBuilder
-import org.jetbrains.kotlin.asJava.classes.KtLightClass
-import org.jetbrains.kotlin.asJava.elements.KtLightMethod
-import org.jetbrains.kotlin.idea.search.usagesSearch.constructor
-import org.jetbrains.kotlin.lexer.KtModifierKeywordToken
-import org.jetbrains.kotlin.name.FqName
-import org.jetbrains.kotlin.psi.KtClass
-import org.jetbrains.kotlin.psi.KtClassOrObject
-import org.jetbrains.kotlin.psi.KtObjectDeclaration
-import org.jetbrains.kotlin.psi.allConstructors
 import java.util.*
 
 interface PsiClassBuilder
@@ -50,6 +37,18 @@ open class JavaPsiClassBuilder(
     override fun setContainingClass(containingClass: PsiClass?): JavaPsiClassBuilder {
         mContainingFile = containingClass?.containingFile
         super.setContainingClass(containingClass)
+        return this
+    }
+
+    fun addParameterType(types: PsiTypeParameterList): JavaPsiClassBuilder {
+        for (type in types.typeParameters) {
+            addParameterType(type)
+        }
+        return this
+    }
+
+    fun addParameterType(type: PsiTypeParameter): JavaPsiClassBuilder {
+        typeParameterList.addParameter(type)
         return this
     }
 
