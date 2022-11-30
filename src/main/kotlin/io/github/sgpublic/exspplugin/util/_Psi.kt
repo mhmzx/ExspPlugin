@@ -47,11 +47,13 @@ val KtProperty.SetterName: String get() {
 
 fun PsiClass.createEditorClass(): LightPsiClassBuilder {
     val constructor = PsiMethodBuilder(manager, JavaLanguage.INSTANCE, name ?: "")
+        .addModifiers(PsiModifier.PRIVATE)
         .setConstructor(true)
         .addParameter("editor", "android.content.SharedPreferences.Editor")
     return JavaEditorClassBuilder(this)
-        .addConstructor(constructor)
         .addModifier(PsiModifier.PUBLIC, PsiModifier.STATIC)
+        .addConstructor(constructor)
+        .addExtends("io.github.sgpublic.exsp.SpEditor")
         .setContainingClass(this)
 }
 

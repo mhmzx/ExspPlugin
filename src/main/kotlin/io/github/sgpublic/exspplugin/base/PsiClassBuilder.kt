@@ -72,6 +72,11 @@ open class JavaPsiClassBuilder(
         return mQualifiedName
     }
 
+    fun addExtends(type: String): JavaPsiClassBuilder {
+        extendsList.addReference(type)
+        return this
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
