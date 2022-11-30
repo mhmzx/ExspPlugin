@@ -40,11 +40,6 @@ val PsiField.SetterName: String get() {
     return "set$name"
 }
 
-val KtProperty.SetterName: String get() {
-    val name = name?.capitalize() ?: ""
-    return "set$name"
-}
-
 fun PsiClass.createEditorClass(): LightPsiClassBuilder {
     val constructor = PsiMethodBuilder(manager, JavaLanguage.INSTANCE, name ?: "")
         .addModifiers(PsiModifier.PRIVATE)
@@ -59,21 +54,4 @@ fun PsiClass.createEditorClass(): LightPsiClassBuilder {
 
 fun PsiClass.getEditorClass(): PsiClass {
     return findInnerClassByName("Editor", false)!!
-}
-
-fun KtObjectDeclaration.createEditorClass(): KtClass {
-    return KtPsiFactory(project, true)
-        .createClass("class ${fqName?.asString()}.Editor (private val editor: android.content.SharedPreferences.Editor)")
-}
-
-val KtObjectDeclaration.ktParent: KtClass get() {
-    return parent as KtClass
-}
-
-fun KtClass.hasAnnotation(annotation: Class<out Annotation>): Boolean {
-    log.info("check annotation for $name: $annotation")
-    return annotations.any {
-        log.info("annotation name: ${it.getKotlinFqName()?.asString()}")
-        it.getKotlinFqName()?.asString() == annotation.javaClass.canonicalName
-    }
 }
