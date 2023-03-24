@@ -1,26 +1,24 @@
-package io.github.sgpublic.exspplugin.base
+package io.github.sgpublic.xxprefplugin.base
 
 import com.intellij.lang.Language
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.*
 import com.intellij.psi.impl.light.LightMethodBuilder
-import javaslang.Function1
 import org.jetbrains.annotations.NotNull
-import org.jetbrains.kotlin.idea.KotlinLanguage
 
 open class PsiMethodBuilder(
     manager: PsiManager, language: Language, name: String
 ): LightMethodBuilder(manager, language, name), SyntheticElement {
     private var myBodyAsText: String? = null
     private var myBodyCodeBlock: PsiCodeBlock? = null
-    private var myBuilderBodyFunction: Function1<PsiMethodBuilder, String>? = null
+    private var myBuilderBodyFunction: ((PsiMethodBuilder) -> String)? = null
 
     override fun getBody(): PsiCodeBlock? {
         var bodyAsText: String? = myBodyAsText
-        val builderBodyFunction: Function1<PsiMethodBuilder, String>? = myBuilderBodyFunction
+        val builderBodyFunction: ((PsiMethodBuilder) -> String)? = myBuilderBodyFunction
         if (null == myBodyCodeBlock && (bodyAsText != null || builderBodyFunction != null)) {
             if (bodyAsText == null) {
-                bodyAsText = builderBodyFunction?.apply(this)
+                bodyAsText = builderBodyFunction?.invoke(this)
             }
             val elementFactory: PsiElementFactory = JavaPsiFacade.getElementFactory(project)
             myBodyCodeBlock = elementFactory.createCodeBlockFromText("{$bodyAsText}", this)
@@ -40,7 +38,3 @@ open class PsiMethodBuilder(
 class JavaPsiMethodBuilder(
     manager: PsiManager, name: String
 ): PsiMethodBuilder(manager, JavaLanguage.INSTANCE, name)
-
-class KtPsiMethodBuilder(
-    manager: PsiManager, name: String
-): PsiMethodBuilder(manager, KotlinLanguage.INSTANCE, name)

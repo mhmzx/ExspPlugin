@@ -1,4 +1,4 @@
-package io.github.sgpublic.exspplugin.base
+package io.github.sgpublic.xxprefplugin.base
 
 import com.intellij.psi.*
 import com.intellij.psi.impl.light.LightModifierList

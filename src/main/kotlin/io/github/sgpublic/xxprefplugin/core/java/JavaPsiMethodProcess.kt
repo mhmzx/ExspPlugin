@@ -1,18 +1,18 @@
-package io.github.sgpublic.exspplugin.core.java
+package io.github.sgpublic.xxprefplugin.core.java
 
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.*
-import io.github.sgpublic.exsp.annotations.ExSharedPreference
-import io.github.sgpublic.exsp.annotations.ExValue
-import io.github.sgpublic.exspplugin.base.PsiMethodBuilder
-import io.github.sgpublic.exspplugin.base.PsiProcess
-import io.github.sgpublic.exspplugin.util.*
+import io.github.sgpublic.xxpref.annotations.PrefVal
+import io.github.sgpublic.xxpref.annotations.XXPreference
+import io.github.sgpublic.xxprefplugin.base.PsiMethodBuilder
+import io.github.sgpublic.xxprefplugin.base.PsiProcess
+import io.github.sgpublic.xxprefplugin.util.*
 
 open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod>(clazz) {
     override fun process(): Collection<PsiMethod> {
         val result = mutableListOf<PsiMethod>()
 
-        val annotation = OriginElement.getAnnotation(ExSharedPreference::class.java.canonicalName) ?: return result
+        val annotation = OriginElement.getAnnotation(XXPreference::class.java.canonicalName) ?: return result
 
         if (OriginElement.hasAnnotation("lombok.Data")) {
             log.warn("DO NOT add @lombok.Data with @ExSharedPreference together! In class: $Name")
@@ -33,7 +33,7 @@ open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod
             }
 
         for (field in OriginElement.fields) {
-            if (!field.hasAnnotation(ExValue::class.java.canonicalName) ||
+            if (!field.hasAnnotation(PrefVal::class.java.canonicalName) ||
                 field.hasModifierProperty(PsiModifier.FINAL)) {
                 continue
             }

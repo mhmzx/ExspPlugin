@@ -1,20 +1,20 @@
-package io.github.sgpublic.exspplugin.core.java
+package io.github.sgpublic.xxprefplugin.core.java
 
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiModifier
-import io.github.sgpublic.exsp.annotations.ExSharedPreference
-import io.github.sgpublic.exspplugin.base.PsiMethodBuilder
-import io.github.sgpublic.exspplugin.base.PsiProcess
-import io.github.sgpublic.exspplugin.util.SetterName
-import io.github.sgpublic.exspplugin.util.createEditorClass
-import io.github.sgpublic.exspplugin.util.getType
+import io.github.sgpublic.xxpref.annotations.XXPreference
+import io.github.sgpublic.xxprefplugin.base.PsiMethodBuilder
+import io.github.sgpublic.xxprefplugin.base.PsiProcess
+import io.github.sgpublic.xxprefplugin.util.SetterName
+import io.github.sgpublic.xxprefplugin.util.createEditorClass
+import io.github.sgpublic.xxprefplugin.util.getType
 
 open class JavaPsiClassProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiClass>(clazz) {
     override fun process(): Collection<PsiClass> {
         val result = mutableListOf<PsiClass>()
 
-        OriginElement.getAnnotation(ExSharedPreference::class.java.canonicalName) ?: return result
+        OriginElement.getAnnotation(XXPreference::class.java.canonicalName) ?: return result
 
         val Editor = OriginElement.createEditorClass()
 

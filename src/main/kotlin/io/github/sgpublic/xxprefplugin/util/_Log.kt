@@ -1,4 +1,4 @@
-package io.github.sgpublic.exspplugin.util
+package io.github.sgpublic.xxprefplugin.util
 
 import com.intellij.openapi.diagnostic.LoggerRt
 

@@ -1,8 +1,8 @@
-package io.github.sgpublic.exspplugin.core
+package io.github.sgpublic.xxprefplugin.core
 
 import com.intellij.psi.*
 import com.intellij.psi.augment.PsiAugmentProvider
-import io.github.sgpublic.exspplugin.base.PsiProcess
+import io.github.sgpublic.xxprefplugin.base.PsiProcess
 
 class PsiAugmentProvider: PsiAugmentProvider() {
     override fun <Psi : PsiElement> getAugments(

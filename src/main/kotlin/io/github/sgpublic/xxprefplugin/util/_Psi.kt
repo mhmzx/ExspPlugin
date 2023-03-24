@@ -1,16 +1,10 @@
-package io.github.sgpublic.exspplugin.util
+package io.github.sgpublic.xxprefplugin.util
 
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.*
 import com.intellij.psi.impl.light.LightPsiClassBuilder
-import io.github.sgpublic.exspplugin.base.JavaEditorClassBuilder
-import io.github.sgpublic.exspplugin.base.PsiMethodBuilder
-import org.jetbrains.kotlin.idea.base.utils.fqname.getKotlinFqName
-import org.jetbrains.kotlin.lombok.utils.capitalize
-import org.jetbrains.kotlin.psi.KtClass
-import org.jetbrains.kotlin.psi.KtObjectDeclaration
-import org.jetbrains.kotlin.psi.KtProperty
-import org.jetbrains.kotlin.psi.KtPsiFactory
+import io.github.sgpublic.xxprefplugin.base.JavaEditorClassBuilder
+import io.github.sgpublic.xxprefplugin.base.PsiMethodBuilder
 
 fun LightPsiClassBuilder.addModifier(vararg modifiers: String): LightPsiClassBuilder {
     val list = modifierList
@@ -48,10 +42,10 @@ fun PsiClass.createEditorClass(): LightPsiClassBuilder {
     return JavaEditorClassBuilder(this)
         .addModifier(PsiModifier.PUBLIC, PsiModifier.STATIC)
         .addConstructor(constructor)
-        .addExtends("io.github.sgpublic.exsp.SpEditor")
+        .addExtends("io.github.sgpublic.xxpref.PrefEditor")
         .setContainingClass(this)
 }
 
 fun PsiClass.getEditorClass(): PsiClass {
-    return findInnerClassByName("Editor", false)!!
+    return findInnerClassByName(JavaEditorClassBuilder.Name, false)!!
 }
