@@ -18,16 +18,21 @@ abstract class PsiProcess<T1: PsiElement, T2: PsiElement>(
 
     companion object {
         fun <T1: PsiElement, T2: PsiElement> of(element: T1, type: Class<T2>): PsiProcess<T1, T2>? {
-            val result = when (element) {
-                is PsiClass -> {
-                    when (type) {
-                        PsiMethod::class.java -> JavaPsiMethodProcess(element)
-                        PsiClass::class.java -> JavaPsiClassProcess(element)
-                        PsiField::class.java -> JavaPsiFieldProcess(element)
-                        else -> null
+            val result = try {
+                when (element) {
+                    is PsiClass -> {
+                        when (type) {
+                            PsiMethod::class.java -> JavaPsiMethodProcess(element)
+                            PsiClass::class.java -> JavaPsiClassProcess(element)
+                            PsiField::class.java -> JavaPsiFieldProcess(element)
+                            else -> null
+                        }
                     }
+                    else -> null
                 }
-                else -> null
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
             }
             @Suppress("UNCHECKED_CAST")
             return result as PsiProcess<T1, T2>?

@@ -4,7 +4,7 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiModifier
 import io.github.sgpublic.xxprefplugin.base.PsiProcess
-import io.github.sgpublic.xxprefplugin.base.PsiFieldBuilder
+import io.github.sgpublic.xxprefplugin.base.java.PsiFieldBuilder
 import io.github.sgpublic.xxprefplugin.util.getType
 
 open class JavaPsiFieldProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiField>(clazz) {

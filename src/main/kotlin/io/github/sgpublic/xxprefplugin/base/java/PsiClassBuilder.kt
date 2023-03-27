@@ -1,7 +1,8 @@
-package io.github.sgpublic.xxprefplugin.base
+package io.github.sgpublic.xxprefplugin.base.java
 
+import com.intellij.lang.Language
+import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.*
-import com.intellij.psi.impl.light.LightModifierList
 import com.intellij.psi.impl.light.LightPsiClassBuilder
 import java.util.*
 
@@ -18,6 +19,11 @@ open class JavaPsiClassBuilder(
         return this
     }
 
+    fun setModifiers(vararg modifiers: String): JavaPsiClassBuilder {
+        modifierList.clearModifiers()
+        return addModifiers(*modifiers)
+    }
+
     private val constructors: LinkedList<PsiMethod> = LinkedList()
     fun addConstructor(vararg methods: PsiMethod): JavaPsiClassBuilder {
         constructors.addAll(methods)
@@ -28,17 +34,17 @@ open class JavaPsiClassBuilder(
         return constructors.toTypedArray()
     }
 
-    private var mContainingFile: PsiFile? = null
+//    private var mContainingFile: PsiFile? = null
 
     override fun setContainingClass(containingClass: PsiClass?): JavaPsiClassBuilder {
-        mContainingFile = containingClass?.containingFile
+//        mContainingFile = containingClass?.containingFile
         super.setContainingClass(containingClass)
         return this
     }
 
-    override fun getContainingFile(): PsiFile? {
-        return mContainingFile
-    }
+//    override fun getContainingFile(): PsiFile? {
+//        return mContainingFile ?: context?.containingFile
+//    }
 
     fun addParameterType(types: PsiTypeParameterList): JavaPsiClassBuilder {
         for (type in types.typeParameters) {
@@ -54,10 +60,6 @@ open class JavaPsiClassBuilder(
 
     override fun getScope(): PsiElement {
         return containingClass?.scope ?: super.getScope()
-    }
-
-    override fun getParent(): PsiElement? {
-        return containingClass
     }
 
     override fun getQualifiedName(): String {

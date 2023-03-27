@@ -1,4 +1,4 @@
-package io.github.sgpublic.xxprefplugin.base
+package io.github.sgpublic.xxprefplugin.base.java
 
 import com.intellij.psi.*
 import com.intellij.psi.impl.light.LightFieldBuilder

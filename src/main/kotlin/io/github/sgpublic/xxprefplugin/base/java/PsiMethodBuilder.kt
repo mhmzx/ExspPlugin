@@ -1,4 +1,4 @@
-package io.github.sgpublic.xxprefplugin.base
+package io.github.sgpublic.xxprefplugin.base.java
 
 import com.intellij.lang.Language
 import com.intellij.lang.java.JavaLanguage

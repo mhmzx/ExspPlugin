@@ -2,10 +2,11 @@ package io.github.sgpublic.xxprefplugin.core.java
 
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiManager
 import com.intellij.psi.PsiModifier
 import io.github.sgpublic.xxpref.annotations.XXPreference
-import io.github.sgpublic.xxprefplugin.base.PsiMethodBuilder
 import io.github.sgpublic.xxprefplugin.base.PsiProcess
+import io.github.sgpublic.xxprefplugin.base.java.PsiMethodBuilder
 import io.github.sgpublic.xxprefplugin.util.SetterName
 import io.github.sgpublic.xxprefplugin.util.createEditorClass
 import io.github.sgpublic.xxprefplugin.util.getType

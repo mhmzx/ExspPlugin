@@ -4,8 +4,8 @@ import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.*
 import io.github.sgpublic.xxpref.annotations.PrefVal
 import io.github.sgpublic.xxpref.annotations.XXPreference
-import io.github.sgpublic.xxprefplugin.base.PsiMethodBuilder
 import io.github.sgpublic.xxprefplugin.base.PsiProcess
+import io.github.sgpublic.xxprefplugin.base.java.PsiMethodBuilder
 import io.github.sgpublic.xxprefplugin.util.*
 
 open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod>(clazz) {
