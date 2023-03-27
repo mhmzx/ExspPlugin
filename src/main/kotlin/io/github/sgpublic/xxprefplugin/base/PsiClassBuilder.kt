@@ -11,13 +11,9 @@ open class JavaPsiClassBuilder(
     context: PsiElement, simpleName: String,
     private val mQualifiedName: String,
 ) : LightPsiClassBuilder(context, simpleName), SyntheticElement, PsiClassBuilder {
-    private val mModifierList: LightModifierList by lazy {
-        LightModifierList(context.manager, context.language)
-    }
-
-    fun addModifier(vararg modifiers: String): JavaPsiClassBuilder {
+    fun addModifiers(vararg modifiers: String): JavaPsiClassBuilder {
         for (modifier in modifiers) {
-            mModifierList.addModifier(modifier)
+            modifierList.addModifier(modifier)
         }
         return this
     }
@@ -40,6 +36,10 @@ open class JavaPsiClassBuilder(
         return this
     }
 
+    override fun getContainingFile(): PsiFile? {
+        return mContainingFile
+    }
+
     fun addParameterType(types: PsiTypeParameterList): JavaPsiClassBuilder {
         for (type in types.typeParameters) {
             addParameterType(type)
@@ -50,14 +50,6 @@ open class JavaPsiClassBuilder(
     fun addParameterType(type: PsiTypeParameter): JavaPsiClassBuilder {
         typeParameterList.addParameter(type)
         return this
-    }
-
-    override fun getContainingFile(): PsiFile? {
-        return mContainingFile
-    }
-
-    override fun getModifierList(): LightModifierList {
-        return mModifierList
     }
 
     override fun getScope(): PsiElement {

@@ -2,8 +2,10 @@ package io.github.sgpublic.xxprefplugin.base
 
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMethod
 import io.github.sgpublic.xxprefplugin.core.java.JavaPsiClassProcess
+import io.github.sgpublic.xxprefplugin.core.java.JavaPsiFieldProcess
 import io.github.sgpublic.xxprefplugin.core.java.JavaPsiMethodProcess
 
 abstract class PsiProcess<T1: PsiElement, T2: PsiElement>(
@@ -21,6 +23,7 @@ abstract class PsiProcess<T1: PsiElement, T2: PsiElement>(
                     when (type) {
                         PsiMethod::class.java -> JavaPsiMethodProcess(element)
                         PsiClass::class.java -> JavaPsiClassProcess(element)
+                        PsiField::class.java -> JavaPsiFieldProcess(element)
                         else -> null
                     }
                 }

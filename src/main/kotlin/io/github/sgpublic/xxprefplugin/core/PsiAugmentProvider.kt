@@ -9,9 +9,8 @@ class PsiAugmentProvider: PsiAugmentProvider() {
         element: PsiElement, type: Class<Psi>, nameHint: String?
     ): MutableList<Psi> {
         val result = mutableListOf<Psi>()
-        val methods = PsiProcess.of(element, type)
-            ?.process() ?: return result
-        result.addAll(methods)
+        result.addAll(PsiProcess.of(element, type)
+            ?.process() ?: return result)
         return result
     }
 }

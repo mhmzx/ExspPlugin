@@ -3,7 +3,7 @@ import java.util.*
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.8.10"
-    id("org.jetbrains.intellij") version "1.10.0"
+    id("org.jetbrains.intellij") version "1.13.2"
 }
 
 group = "io.github.sgpublic"
@@ -26,8 +26,8 @@ intellij {
         localPath.set(path)
     } else {
         // Android Studio version: https://plugins.jetbrains.com/docs/intellij/android-studio-releases-list.html
-        version.set("2021.3.1.17") // Dolphin (2021.3.1) Patch 1
-//        version.set("2022.1.1.21") // Electric Eel | 2022.1.1 Patch 2
+//        version.set("2021.3.1.17") // Dolphin (2021.3.1) Patch 1
+        version.set("2022.1.1.21") // Electric Eel | 2022.1.1 Patch 2
         type.set("AI") // Android Studio
     }
 

@@ -22,7 +22,7 @@ open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod
         val Editor = OriginElement.getEditorClass()
 
         PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, "edit")
-            .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
+            .setModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
             .setMethodReturnType(Editor.getType())
             .setContainingClass(OriginElement)
             .also {
@@ -43,8 +43,19 @@ open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod
                 continue
             }
 
+            PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, "${field.GetterName}Pref")
+                .setModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
+                .setMethodReturnType(field.type)
+                .setContainingClass(field.containingClass)
+                .also {
+                    it.navigationElement = field
+                }
+                .let {
+                    result.add(it)
+                }
+
             PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, field.GetterName)
-                .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
+                .setModifiers(PsiModifier.PUBLIC)
                 .setMethodReturnType(field.type)
                 .setContainingClass(field.containingClass)
                 .also {
@@ -59,7 +70,7 @@ open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod
                 .createTypeFromText("androidx.lifecycle.LiveData<${field.type.canonicalText}>", OriginElement)
 
             PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, "${field.GetterName}Observer")
-                .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
+                .setModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
                 .setMethodReturnType(liveData)
                 .setContainingClass(field.containingClass)
                 .also {
@@ -70,7 +81,19 @@ open class JavaPsiMethodProcess(clazz: PsiClass): PsiProcess<PsiClass, PsiMethod
                 }
 
             PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, field.SetterName)
-                .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
+                .setModifiers(PsiModifier.PUBLIC)
+                .setMethodReturnType(PsiType.VOID)
+                .addParameter("value", field.type)
+                .setContainingClass(field.containingClass)
+                .also {
+                    it.navigationElement = field
+                }
+                .let {
+                    result.add(it)
+                }
+
+            PsiMethodBuilder(OriginElement.manager, JavaLanguage.INSTANCE, "${field.SetterName}Pref")
+                .setModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
                 .setMethodReturnType(PsiType.VOID)
                 .addParameter("value", field.type)
                 .setContainingClass(field.containingClass)

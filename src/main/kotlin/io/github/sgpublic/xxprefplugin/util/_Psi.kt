@@ -3,7 +3,7 @@ package io.github.sgpublic.xxprefplugin.util
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.psi.*
 import com.intellij.psi.impl.light.LightPsiClassBuilder
-import io.github.sgpublic.xxprefplugin.base.JavaEditorClassBuilder
+import io.github.sgpublic.xxprefplugin.base.JavaPsiClassBuilder
 import io.github.sgpublic.xxprefplugin.base.PsiMethodBuilder
 
 fun LightPsiClassBuilder.addModifier(vararg modifiers: String): LightPsiClassBuilder {
@@ -34,18 +34,19 @@ val PsiField.SetterName: String get() {
     return "set$name"
 }
 
+private const val Editor = "Editor"
 fun PsiClass.createEditorClass(): LightPsiClassBuilder {
     val constructor = PsiMethodBuilder(manager, JavaLanguage.INSTANCE, name ?: "")
         .addModifiers(PsiModifier.PRIVATE)
         .setConstructor(true)
         .addParameter("editor", "android.content.SharedPreferences.Editor")
-    return JavaEditorClassBuilder(this)
-        .addModifier(PsiModifier.PUBLIC, PsiModifier.STATIC)
+    return JavaPsiClassBuilder(this, Editor, "${this.qualifiedName}.$Editor")
+        .addModifiers(PsiModifier.PUBLIC, PsiModifier.STATIC)
         .addConstructor(constructor)
         .addExtends("io.github.sgpublic.xxpref.PrefEditor")
         .setContainingClass(this)
 }
 
 fun PsiClass.getEditorClass(): PsiClass {
-    return findInnerClassByName(JavaEditorClassBuilder.Name, false)!!
+    return findInnerClassByName(Editor, true)!!
 }
